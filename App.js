@@ -29,6 +29,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import { Container , FooterTab, Footer, Button, Content} from "native-base";
 import Home from "./screens/home";
 import Camera from "./screens/camera";
+import Destination from "./destination";
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,10 @@ const App: () => React$Node = () => {
                   name = 'Home'
                   component = {Home}
               />
+            <Stack.Screen
+                name = 'Destination'
+                component = {Destination}
+            />
             <Stack.Screen
                 name = 'Camera'
                 component = {Camera}

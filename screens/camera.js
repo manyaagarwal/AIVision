@@ -1,9 +1,7 @@
-import React , { PureComponent } from 'react';
+import React , { Component } from 'react';
 import { RNCamera } from 'react-native-camera';
-import * as tf from '@tensorflow/tfjs';
-import '@tensorflow/tfjs-react-native';
-import * as mobilenet from '@tensorflow-models/mobilenet';
-import { fetch, decodeJpeg } from '@tensorflow/tfjs-react-native';
+// import * as tf from '@tensorflow/tfjs';
+// import '@tensorflow/tfjs-react-native';
 import {Content} from "native-base";
 import {Text, View, TouchableOpacity, StyleSheet} from "react-native";
 
@@ -21,7 +19,7 @@ const PendingView = () => (
 );
 
 
-class Camera extends PureComponent {
+class Camera extends Component {
 
     constructor(props) {
         super(props);
@@ -38,7 +36,7 @@ class Camera extends PureComponent {
         this.setState({
             isTfReady: true,
         });
-        const model = await mobilenet.load();
+        // const model = await mobilenet.load();
         console.log(this.state);
     }
     // componentDidMount() {
@@ -114,7 +112,7 @@ class Camera extends PureComponent {
     render(){
         const {navigation} = this.props;
         return (
-            <Content style={styles.container}>
+            <View style={styles.container}>
                 <RNCamera
                     style={styles.preview}
                     type={RNCamera.Constants.Type.back}
@@ -138,7 +136,7 @@ class Camera extends PureComponent {
                         );
                     }}
                 </RNCamera>
-            </Content>
+            </View>
         );
     }
 
