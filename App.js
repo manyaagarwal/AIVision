@@ -55,7 +55,6 @@ const App: () => React$Node = () => {
                 name = 'Camera'
                 component = {Camera}
             />
-
           </Stack.Navigator>
             {/*<Footer>*/}
             {/*  <FooterTab>*/}

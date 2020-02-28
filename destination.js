@@ -50,6 +50,7 @@ class Destination extends PureComponent {
         console.log('onSpeechStart: ', e);
         this.setState({
             started: '√',
+            end:'0',
         });
     };
 
@@ -58,6 +59,7 @@ class Destination extends PureComponent {
         console.log('onSpeechEnd: ', e);
         this.setState({
             end: '√',
+            started:'0',
         });
     };
 
@@ -216,7 +218,7 @@ class Destination extends PureComponent {
           </Content>
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=> navigation.navigate('Camera')}>
+                        <Button full onPress={()=> navigation.push('Camera')}>
                             <Text> Go </Text>
                         </Button>
                     </FooterTab>

@@ -24,7 +24,7 @@
     "native-base": "^2.13.8",
     "react": "16.8.6",
     "react-native": "^0.60.0",
-    "react-native-camera": "^2.11.2",
+    "react-native-camera": "^3.19.0",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-reanimated": "^1.7.0",

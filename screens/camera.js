@@ -1,4 +1,4 @@
-import React , { Component } from 'react';
+import React , { PureComponent } from 'react';
 import { RNCamera } from 'react-native-camera';
 // import * as tf from '@tensorflow/tfjs';
 // import '@tensorflow/tfjs-react-native';
@@ -19,7 +19,7 @@ const PendingView = () => (
 );
 
 
-class Camera extends Component {
+class Camera extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -29,16 +29,16 @@ class Camera extends Component {
     }
 
 
-    async componentDidMount() {
-        // Wait for tf to be ready.
-        await tf.ready();
-        // Signal to the app that tensorflow.js can now be used.
-        this.setState({
-            isTfReady: true,
-        });
-        // const model = await mobilenet.load();
-        console.log(this.state);
-    }
+    // async componentDidMount() {
+    //     // Wait for tf to be ready.
+    //     // await tf.ready();
+    //     // Signal to the app that tensorflow.js can now be used.
+    //     this.setState({
+    //         isTfReady: true,
+    //     });
+    //     // const model = await mobilenet.load();
+    //     console.log(this.state);
+    // }
     // componentDidMount() {
     //     if(navigator.mediaDevices){
     //         const mobileCamPromise = navigator.mediaDevices.getUserMedia({
@@ -112,9 +112,12 @@ class Camera extends Component {
     render(){
         const {navigation} = this.props;
         return (
-            <View style={styles.container}>
+            <View>
                 <RNCamera
-                    style={styles.preview}
+                    // style={styles.preview}
+                    ref={ref => {
+                        this.camera = ref;
+                    }}
                     type={RNCamera.Constants.Type.back}
                     flashMode={RNCamera.Constants.FlashMode.on}
                     androidCameraPermissionOptions={{
@@ -124,6 +127,7 @@ class Camera extends Component {
                         buttonNegative: 'Cancel',
                     }}
                     captureAudio = {false}
+                    onFacesDetected = {() => console.log("Person found")}
                 >
                     {({ camera, status, x}) => {
                         if (status !== 'READY') return <PendingView />;
@@ -140,12 +144,12 @@ class Camera extends Component {
         );
     }
 
-    // takePicture = async function(camera) {
-    //     const options = { quality: 0.5, base64: true };
-    //     const data = await camera.takePictureAsync(options);
-    //     //  eslint-disable-next-line
-    //     console.log(data.uri);
-    // };
+    takePicture = async function(camera) {
+        const options = { quality: 0.5, base64: true };
+        const data = await camera.takePictureAsync(options);
+        //  eslint-disable-next-line
+        console.log(data.uri);
+    };
 }
 
 
