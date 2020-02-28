@@ -185,6 +185,15 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.android.support:multidex:1.0.1'
+    implementation (project(':react-native-camera')) {
+        implementation ("com.google.android.gms:play-services-vision:10.0.1") {
+            force = true
+        }
+
+        exclude group: "com.google.android.gms"
+        implementation 'com.android.support:exifinterface:27.+'
+    }
+    implementation 'com.google.android.gms:play-services-base:10.0.1'
     addUnimodulesDependencies()
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

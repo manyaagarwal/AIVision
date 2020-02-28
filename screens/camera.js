@@ -2,6 +2,9 @@ import React , { PureComponent } from 'react';
 import { RNCamera } from 'react-native-camera';
 import * as tf from '@tensorflow/tfjs';
 import '@tensorflow/tfjs-react-native';
+import * as mobilenet from '@tensorflow-models/mobilenet';
+import { fetch, decodeJpeg } from '@tensorflow/tfjs-react-native';
+import {Content} from "native-base";
 import {Text, View, TouchableOpacity, StyleSheet} from "react-native";
 
 const PendingView = () => (
@@ -19,6 +22,7 @@ const PendingView = () => (
 
 
 class Camera extends PureComponent {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -34,6 +38,7 @@ class Camera extends PureComponent {
         this.setState({
             isTfReady: true,
         });
+        const model = await mobilenet.load();
         console.log(this.state);
     }
     // componentDidMount() {
@@ -109,41 +114,40 @@ class Camera extends PureComponent {
     render(){
         const {navigation} = this.props;
         return (
-            <View style={styles.container}>
-                <Text> Hello </Text>
-                {/*<RNCamera*/}
-                {/*    style={styles.preview}*/}
-                {/*    type={RNCamera.Constants.Type.back}*/}
-                {/*    flashMode={RNCamera.Constants.FlashMode.on}*/}
-                {/*    androidCameraPermissionOptions={{*/}
-                {/*        title: 'Permission to use camera',*/}
-                {/*        message: 'We need your permission to use your camera',*/}
-                {/*        buttonPositive: 'Ok',*/}
-                {/*        buttonNegative: 'Cancel',*/}
-                {/*    }}*/}
-                {/*    captureAudio = {false}*/}
-                {/*>*/}
-                {/*    {({ camera, status, x}) => {*/}
-                {/*        if (status !== 'READY') return <PendingView />;*/}
-                {/*        return (*/}
-                {/*            <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>*/}
-                {/*                <TouchableOpacity onPress={() => this.takePicture(camera)} style={styles.capture}>*/}
-                {/*                    <Text style={{ fontSize: 14 }}> SNAP </Text>*/}
-                {/*                </TouchableOpacity>*/}
-                {/*            </View>*/}
-                {/*        );*/}
-                {/*    }}*/}
-                {/*</RNCamera>*/}
-            </View>
+            <Content style={styles.container}>
+                <RNCamera
+                    style={styles.preview}
+                    type={RNCamera.Constants.Type.back}
+                    flashMode={RNCamera.Constants.FlashMode.on}
+                    androidCameraPermissionOptions={{
+                        title: 'Permission to use camera',
+                        message: 'We need your permission to use your camera',
+                        buttonPositive: 'Ok',
+                        buttonNegative: 'Cancel',
+                    }}
+                    captureAudio = {false}
+                >
+                    {({ camera, status, x}) => {
+                        if (status !== 'READY') return <PendingView />;
+                        return (
+                            <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
+                                <TouchableOpacity onPress={() => this.takePicture(camera)} style={styles.capture}>
+                                    <Text style={{ fontSize: 14 }}> SNAP </Text>
+                                </TouchableOpacity>
+                            </View>
+                        );
+                    }}
+                </RNCamera>
+            </Content>
         );
     }
 
-    takePicture = async function(camera) {
-        const options = { quality: 0.5, base64: true };
-        const data = await camera.takePictureAsync(options);
-        //  eslint-disable-next-line
-        console.log(data.uri);
-    };
+    // takePicture = async function(camera) {
+    //     const options = { quality: 0.5, base64: true };
+    //     const data = await camera.takePictureAsync(options);
+    //     //  eslint-disable-next-line
+    //     console.log(data.uri);
+    // };
 }
 
 
